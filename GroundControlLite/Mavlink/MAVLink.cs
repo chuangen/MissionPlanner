@@ -1304,7 +1304,7 @@ Please check the following
 
         public bool doMotorTest(int motor, MAVLink.MOTOR_TEST_THROTTLE_TYPE thr_type, int throttle, int timeout)
         {
-            return MainV2.comPort.doCommand(MAVLink.MAV_CMD.DO_MOTOR_TEST, (float)motor, (float)(byte)thr_type, (float)throttle, (float)timeout, 0, 0, 0);
+            return this.doCommand(MAVLink.MAV_CMD.DO_MOTOR_TEST, (float)motor, (float)(byte)thr_type, (float)throttle, (float)timeout, 0, 0, 0);
         }
 
         public bool doCommand(MAV_CMD actionid, float p1, float p2, float p3, float p4, float p5, float p6, float p7)
@@ -3464,28 +3464,28 @@ Please check the following
                     switch (MAV.aptype)
                     {
                         case MAVLink.MAV_TYPE.FIXED_WING:
-                            MAV.cs.firmware = MainV2.Firmwares.ArduPlane;
+                            MAV.cs.firmware = Firmwares.ArduPlane;
                             break;
                         case MAVLink.MAV_TYPE.QUADROTOR:
-                            MAV.cs.firmware = MainV2.Firmwares.ArduCopter2;
+                            MAV.cs.firmware = Firmwares.ArduCopter2;
                             break;
                         case MAVLink.MAV_TYPE.TRICOPTER:
-                            MAV.cs.firmware = MainV2.Firmwares.ArduCopter2;
+                            MAV.cs.firmware = Firmwares.ArduCopter2;
                             break;
                         case MAVLink.MAV_TYPE.HEXAROTOR:
-                            MAV.cs.firmware = MainV2.Firmwares.ArduCopter2;
+                            MAV.cs.firmware = Firmwares.ArduCopter2;
                             break;
                         case MAVLink.MAV_TYPE.OCTOROTOR:
-                            MAV.cs.firmware = MainV2.Firmwares.ArduCopter2;
+                            MAV.cs.firmware = Firmwares.ArduCopter2;
                             break;
                         case MAVLink.MAV_TYPE.HELICOPTER:
-                            MAV.cs.firmware = MainV2.Firmwares.ArduCopter2;
+                            MAV.cs.firmware = Firmwares.ArduCopter2;
                             break;
                         case MAVLink.MAV_TYPE.GROUND_ROVER:
-                            MAV.cs.firmware = MainV2.Firmwares.ArduRover;
+                            MAV.cs.firmware = Firmwares.ArduRover;
                             break;
                         case MAV_TYPE.ANTENNA_TRACKER:
-                            MAV.cs.firmware = MainV2.Firmwares.ArduTracker;
+                            MAV.cs.firmware = Firmwares.ArduTracker;
                             break;
                         default:
                             break;
@@ -3495,7 +3495,7 @@ Please check the following
                     switch (MAV.aptype)
                     {
                         case MAVLink.MAV_TYPE.FIXED_WING:
-                            MAV.cs.firmware = MainV2.Firmwares.ArduPlane;
+                            MAV.cs.firmware = Firmwares.ArduPlane;
                             break;
                     }
                     break;
@@ -3503,7 +3503,7 @@ Please check the following
                     switch (MAV.aptype)
                     {
                         case MAVLink.MAV_TYPE.FIXED_WING:
-                            MAV.cs.firmware = MainV2.Firmwares.Ateryx;
+                            MAV.cs.firmware = Firmwares.Ateryx;
                             break;
                     }
                     break;
@@ -3511,13 +3511,13 @@ Please check the following
 
             switch (MAV.cs.firmware)
             {
-                case MainV2.Firmwares.ArduCopter2:
+                case Firmwares.ArduCopter2:
                     MAV.Guid = MainV2.config["copter_guid"].ToString();
                     break;
-                case MainV2.Firmwares.ArduPlane:
+                case Firmwares.ArduPlane:
                     MAV.Guid = MainV2.config["plane_guid"].ToString();
                     break;
-                case MainV2.Firmwares.ArduRover:
+                case Firmwares.ArduRover:
                     MAV.Guid = MainV2.config["rover_guid"].ToString();
                     break;
             }

@@ -159,6 +159,7 @@
     <Reference Include="System.Drawing" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Aircraft.cs" />
     <Compile Include="Arduino\ArduinoSTK.cs">
       <SubType>Component</SubType>
     </Compile>
@@ -195,6 +196,7 @@
     <Compile Include="Mavlink\MAVLink.cs">
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="MavpilotSubject.cs" />
     <Compile Include="Program.cs">
       <SubType>Code</SubType>
     </Compile>

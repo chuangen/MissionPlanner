@@ -80,7 +80,7 @@ namespace MissionPlanner.Comms
 
                         if (CommsSerialScan.connect)
                         {
-                            MainV2.comPort.BaseStream = port.BaseStream;
+                            Aircraft.Default.Link.BaseStream = port.BaseStream;
 
                             doconnect();
                         }
@@ -122,7 +122,7 @@ namespace MissionPlanner.Comms
         {
             if (MainV2.instance == null)
             {
-                MainV2.comPort.Open(false);
+                Aircraft.Default.Link.Open(false);
             }
             else
             {
@@ -131,12 +131,12 @@ namespace MissionPlanner.Comms
                 {
                     MainV2.instance.BeginInvoke((System.Windows.Forms.MethodInvoker)delegate()
                     {
-                        MainV2.comPort.Open(true);
+                        Aircraft.Default.Link.Open(true);
                     });
                 }
                 else
                 {
-                    MainV2.comPort.Open(true);
+                    Aircraft.Default.Link.Open(true);
                 }
             }
         }

@@ -20,14 +20,14 @@ namespace MissionPlanner.Utilities
         public TerrainFollow()
         {
             log.Info("Subscribe to packets");
-            subscription = MainV2.comPort.SubscribeToPacketType(MAVLink.MAVLINK_MSG_ID.TERRAIN_REQUEST, ReceviedPacket);
-            //MainV2.comPort.SubscribeToPacketType(MAVLink.MAVLINK_MSG_ID.TERRAIN_REPORT, ReceviedPacket);
+            subscription = Aircraft.Default.Link.SubscribeToPacketType(MAVLink.MAVLINK_MSG_ID.TERRAIN_REQUEST, ReceviedPacket);
+            //Aircraft.Default.Link.SubscribeToPacketType(MAVLink.MAVLINK_MSG_ID.TERRAIN_REPORT, ReceviedPacket);
         }
 
         ~TerrainFollow()
         {
             log.Info("unSubscribe to packets");
-            MainV2.comPort.UnSubscribeToPacketType(subscription);
+            Aircraft.Default.Link.UnSubscribeToPacketType(subscription);
         }
 
         bool ReceviedPacket(byte[] rawpacket)
@@ -118,7 +118,7 @@ namespace MissionPlanner.Utilities
                 resp.data[i] = (short)alt;
             }
 
-            MainV2.comPort.sendPacket(resp);
+            Aircraft.Default.Link.sendPacket(resp);
         }
 
         public void checkTerrain(double lat, double lon)
@@ -128,7 +128,7 @@ namespace MissionPlanner.Utilities
             packet.lat = (int)(lat * 1e7);
             packet.lon = (int)(lon * 1e7);
 
-            MainV2.comPort.sendPacket(packet);
+            Aircraft.Default.Link.sendPacket(packet);
         }
     }
 }

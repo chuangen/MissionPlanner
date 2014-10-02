@@ -18,7 +18,7 @@ namespace MissionPlanner
 {
     public static class Program
     {
-        private static readonly ILog log = LogManager.GetLogger("Program");
+        static readonly ILog log = LogManager.GetLogger(System.Reflection.MethodBase.GetCurrentMethod().DeclaringType);
 
         public static DateTime starttime = DateTime.Now;
 

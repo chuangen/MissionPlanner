@@ -36,7 +36,7 @@
             // 
             this.MenuConnect.Location = new System.Drawing.Point(223, 61);
             this.MenuConnect.Name = "MenuConnect";
-            this.MenuConnect.Size = new System.Drawing.Size(129, 48);
+            this.MenuConnect.Size = new System.Drawing.Size(69, 39);
             this.MenuConnect.TabIndex = 0;
             this.MenuConnect.Text = "连接";
             this.MenuConnect.UseVisualStyleBackColor = true;

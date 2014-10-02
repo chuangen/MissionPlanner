@@ -599,18 +599,19 @@ namespace MissionPlanner.Utilities
 
             try
             {
+                MAVLinkInterface comPort = Aircraft.Default.Link;
                 // check if we are seeing heartbeats
-                MainV2.comPort.BaseStream.Open();
-                MainV2.comPort.giveComport = true;
+                comPort.BaseStream.Open();
+                comPort.giveComport = true;
 
-                if (MainV2.comPort.getHeartBeat().Length > 0)
+                if (comPort.getHeartBeat().Length > 0)
                 {
-                    MainV2.comPort.doReboot(true);
-                    MainV2.comPort.Close();
+                    comPort.doReboot(true);
+                    comPort.Close();
                 }
                 else
                 {
-                    MainV2.comPort.BaseStream.Close();
+                    comPort.BaseStream.Close();
                     CustomMessageBox.Show("Please unplug the board, and then press OK and plug back in.\nMission Planner will look for 30 seconds to find the board");
                 }
             }
@@ -773,18 +774,19 @@ namespace MissionPlanner.Utilities
 
             try
             {
+                MAVLinkInterface comPort = Aircraft.Default.Link;
                 // check if we are seeing heartbeats
-                MainV2.comPort.BaseStream.Open();
-                MainV2.comPort.giveComport = true;
+                comPort.BaseStream.Open();
+                comPort.giveComport = true;
 
-                if (MainV2.comPort.getHeartBeat().Length > 0)
+                if (comPort.getHeartBeat().Length > 0)
                 {
-                    MainV2.comPort.doReboot(true);
-                    MainV2.comPort.Close();
+                    comPort.doReboot(true);
+                    comPort.Close();
                 }
                 else
                 {
-                    MainV2.comPort.BaseStream.Close();
+                    comPort.BaseStream.Close();
                     CustomMessageBox.Show("Please unplug the board, and then press OK and plug back in.\nMission Planner will look for 30 seconds to find the board");
                 }
             }
@@ -1042,7 +1044,7 @@ namespace MissionPlanner.Utilities
                 catch { }
                 return false;
             }
-            MainV2.comPort.giveComport = false;
+            Aircraft.Default.Link.giveComport = false;
             return true;
         }
 

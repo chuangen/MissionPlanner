@@ -186,11 +186,12 @@ namespace MissionPlanner
             {
                 if (_ch3percent != -1)
                     return _ch3percent;
+                MAVLinkInterface.MAVState state = Aircraft.Default.Link.MAV;
                 try
                 {
-                    if (MainV2.comPort.MAV.param.ContainsKey("RC3_MIN") && MainV2.comPort.MAV.param.ContainsKey("RC3_MAX"))
+                    if (state.param.ContainsKey("RC3_MIN") && state.param.ContainsKey("RC3_MAX"))
                     {
-                        return (int)(((ch3out - (float)MainV2.comPort.MAV.param["RC3_MIN"]) / ((float)MainV2.comPort.MAV.param["RC3_MAX"] - (float)MainV2.comPort.MAV.param["RC3_MIN"])) * 100);
+                        return (int)(((ch3out - (float)state.param["RC3_MIN"]) / ((float)state.param["RC3_MAX"] - (float)state.param["RC3_MIN"])) * 100);
                     }
                     else
                     {
@@ -397,7 +398,7 @@ namespace MissionPlanner
         public float sonarvoltage { get; set; }
 
         // current firmware
-        public MainV2.Firmwares firmware = MainV2.Firmwares.ArduCopter2;
+        public Firmwares firmware = Firmwares.ArduCopter2;
         public float freemem { get; set; }
         public float load { get; set; }
         public float brklevel { get; set; }
@@ -497,7 +498,7 @@ namespace MissionPlanner
         public ushort rcoverridech7 { get; set; }
         public ushort rcoverridech8 { get; set; }
 
-        public bool connected { get { return (MainV2.comPort.BaseStream.IsOpen || MainV2.comPort.logreadmode); } }
+        public bool connected { get { return (Aircraft.Default.Link.BaseStream.IsOpen || Aircraft.Default.Link.logreadmode); } }
 
         bool useLocation = false;
         bool gotwind = false;
@@ -556,11 +557,11 @@ namespace MissionPlanner
 
             if (desc.Contains("(dist)"))
             {
-                desc = desc.Replace("(dist)", "(" + MainV2.comPort.MAV.cs.DistanceUnit + ")");
+                desc = desc.Replace("(dist)", "(" + Aircraft.Default.Current.DistanceUnit + ")");
             }
             else if (desc.Contains("(speed)"))
             {
-                desc = desc.Replace("(speed)", "(" + MainV2.comPort.MAV.cs.SpeedUnit + ")");
+                desc = desc.Replace("(speed)", "(" + Aircraft.Default.Current.SpeedUnit + ")");
             }
 
             return desc;
@@ -572,12 +573,12 @@ namespace MissionPlanner
         /// <param name="bs"></param>
         public void UpdateCurrentSettings(System.Windows.Forms.BindingSource bs)
         {
-            UpdateCurrentSettings(bs, false, MainV2.comPort);
+            UpdateCurrentSettings(bs, false, Aircraft.Default.Link);
         }
         /*
         public void UpdateCurrentSettings(System.Windows.Forms.BindingSource bs, bool updatenow)
         {
-            UpdateCurrentSettings(bs, false, MainV2.comPort);
+            UpdateCurrentSettings(bs, false, Aircraft.Default.Link);
         }
         */
         public void UpdateCurrentSettings(System.Windows.Forms.BindingSource bs, bool updatenow, MAVLinkInterface mavinterface)
@@ -608,7 +609,7 @@ namespace MissionPlanner
 
                         if (lastpos.Lat != 0 && lastpos.Lng != 0 && armed)
                         {
-                            if (!MainV2.comPort.BaseStream.IsOpen && !MainV2.comPort.logreadmode)
+                            if (!Aircraft.Default.Link.BaseStream.IsOpen && !Aircraft.Default.Link.logreadmode)
                                 distTraveled = 0;
 
                             distTraveled += (float)lastpos.GetDistance(new PointLatLngAlt(lat, lng, 0, "")) * multiplierdist;
@@ -805,9 +806,9 @@ namespace MissionPlanner
                                 }
                             }
 
-                            if (oldmode != mode && MainV2.speechEnable && MainV2.comPort.MAV.cs == this && MainV2.getConfig("speechmodeenabled") == "True")
+                            if (oldmode != mode && Aircraft.speechEnable && Aircraft.Default.Current == this && MainV2.getConfig("speechmodeenabled") == "True")
                             {
-                                MainV2.speechEngine.SpeakAsync(Common.speechConversion(MainV2.getConfig("speechmode")));
+                                Aircraft.speechEngine.SpeakAsync(Common.speechConversion(MainV2.getConfig("speechmode")));
                             }
                         }
                     }
@@ -1061,9 +1062,9 @@ namespace MissionPlanner
 
                         wpno = wpcur.seq;
 
-                        if (oldwp != wpno && MainV2.speechEnable && MainV2.comPort.MAV.cs == this && MainV2.getConfig("speechwaypointenabled") == "True")
+                        if (oldwp != wpno && Aircraft.speechEnable && Aircraft.Default.Current == this && MainV2.getConfig("speechwaypointenabled") == "True")
                         {
-                            MainV2.speechEngine.SpeakAsync(Common.speechConversion(MainV2.getConfig("speechwaypoint")));
+                            Aircraft.speechEngine.SpeakAsync(Common.speechConversion(MainV2.getConfig("speechwaypoint")));
                         }
 
                         //MAVLink.packets[(byte)MAVLink.MSG_NAMES.WAYPOINT_CURRENT] = null;

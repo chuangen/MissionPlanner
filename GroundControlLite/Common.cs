@@ -196,30 +196,30 @@ namespace MissionPlanner
             log.Info("getModesList Called");
 
             // ensure we get the correct list
-            MainV2.comPort.MAV.cs.firmware = cs.firmware;
+            Aircraft.Default.Current.firmware = cs.firmware;
 
-            if (cs.firmware == MainV2.Firmwares.ArduPlane)
+            if (cs.firmware == Firmwares.ArduPlane)
             {
                 var flightModes = Utilities.ParameterMetaDataRepository.GetParameterOptionsInt("FLTMODE1");
                 flightModes.Add(new KeyValuePair<int, string>(16, "INITIALISING"));
                 return flightModes;
             }
-            else if (cs.firmware == MainV2.Firmwares.Ateryx)
+            else if (cs.firmware == Firmwares.Ateryx)
             {
                 var flightModes = Utilities.ParameterMetaDataRepository.GetParameterOptionsInt("FLTMODE1"); //same as apm
                 return flightModes;
             }
-            else if (cs.firmware == MainV2.Firmwares.ArduCopter2)
+            else if (cs.firmware == Firmwares.ArduCopter2)
             {
                 var flightModes = Utilities.ParameterMetaDataRepository.GetParameterOptionsInt("FLTMODE1");
                 return flightModes;
             }
-            else if (cs.firmware == MainV2.Firmwares.ArduRover)
+            else if (cs.firmware == Firmwares.ArduRover)
             {
                 var flightModes = Utilities.ParameterMetaDataRepository.GetParameterOptionsInt("MODE1");
                 return flightModes;
             }
-            else if (cs.firmware == MainV2.Firmwares.ArduTracker)
+            else if (cs.firmware == Firmwares.ArduTracker)
             {
                 var temp = new List<KeyValuePair<int, string>>();
                 temp.Add(new KeyValuePair<int, string>(0, "MANUAL"));
@@ -328,32 +328,33 @@ namespace MissionPlanner
 
         public static string speechConversion(string input)
         {
-            if (MainV2.comPort.MAV.cs.wpno == 0)
+            CurrentState state = Aircraft.Default.Current;
+            if (state.wpno == 0)
             {
                 input = input.Replace("{wpn}", "Home");
             }
             else
             {
-                input = input.Replace("{wpn}", MainV2.comPort.MAV.cs.wpno.ToString());
+                input = input.Replace("{wpn}", state.wpno.ToString());
             }
 
-            input = input.Replace("{asp}", MainV2.comPort.MAV.cs.airspeed.ToString("0"));
+            input = input.Replace("{asp}", state.airspeed.ToString("0"));
 
-            input = input.Replace("{alt}", MainV2.comPort.MAV.cs.alt.ToString("0"));
+            input = input.Replace("{alt}", state.alt.ToString("0"));
 
-            input = input.Replace("{wpa}", MainV2.comPort.MAV.cs.targetalt.ToString("0"));
+            input = input.Replace("{wpa}", state.targetalt.ToString("0"));
 
-            input = input.Replace("{gsp}", MainV2.comPort.MAV.cs.groundspeed.ToString("0"));
+            input = input.Replace("{gsp}", state.groundspeed.ToString("0"));
 
-            input = input.Replace("{mode}", MainV2.comPort.MAV.cs.mode.ToString());
+            input = input.Replace("{mode}", state.mode.ToString());
 
-            input = input.Replace("{batv}", MainV2.comPort.MAV.cs.battery_voltage.ToString("0.00"));
+            input = input.Replace("{batv}", state.battery_voltage.ToString("0.00"));
 
-            input = input.Replace("{batp}", (MainV2.comPort.MAV.cs.battery_remaining).ToString("0"));
+            input = input.Replace("{batp}", (state.battery_remaining).ToString("0"));
 
-            input = input.Replace("{vsp}", (MainV2.comPort.MAV.cs.verticalspeed).ToString("0.0"));
+            input = input.Replace("{vsp}", (state.verticalspeed).ToString("0.0"));
 
-            input = input.Replace("{curr}", (MainV2.comPort.MAV.cs.current).ToString("0.0"));
+            input = input.Replace("{curr}", (state.current).ToString("0.0"));
 
             return input;
         }

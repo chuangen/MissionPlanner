@@ -65,7 +65,7 @@ namespace MissionPlanner.Utilities
             // Either it will be pulled from a file in the ArduPlane hierarchy or the ArduCopter hierarchy
              try
              {
-                 MainV2.Firmwares selected = MainV2.comPort.MAV.cs.firmware;
+                 Firmwares selected = Aircraft.Default.Current.firmware;
 
                  var element = _parameterMetaDataXML.Element("Params").Element(selected.ToString());
                  if (element != null && element.HasElements)
