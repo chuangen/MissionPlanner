@@ -234,7 +234,8 @@ namespace MissionPlanner
         public float wpno { get; set; }
         [DisplayText("Mode")]
         public string mode { get; set; }
-        uint _mode = 99999;
+        public byte base_mode { get; set; }
+        public uint _mode = 99999;
         [DisplayText("ClimbRate (speed)")]
         public float climbrate { get { return _climbrate * multiplierspeed; } set {_climbrate = value;} }
 
@@ -517,6 +518,7 @@ namespace MissionPlanner
         public void ResetInternals()
         {
             mode = "Unknown";
+            base_mode = 0;
             _mode = 99999;
             messages = new List<string>();
             useLocation = false;
@@ -777,6 +779,7 @@ namespace MissionPlanner
                             failsafe = hb.system_status == (byte)MAVLink.MAV_STATE.CRITICAL;
 
                             string oldmode = mode;
+                            base_mode = hb.base_mode;
 
                             if ((hb.base_mode & (byte)MAVLink.MAV_MODE_FLAG.CUSTOM_MODE_ENABLED) != 0)
                             {
